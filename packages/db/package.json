@@ -1,0 +1,19 @@
+{
+  "name": "@repo/db",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+   "exports":{
+    "./client": "./src/index.ts"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "prisma": "6.16.2",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@prisma/client": "6.16.2"
+  }
+}
