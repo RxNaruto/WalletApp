@@ -1,19 +1,16 @@
 {
-  "name": "@repo/db",
+  "name": "@repo/bank-webhook",
   "type": "module",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc"
   },
-  "exports": {
-    "./client": "./src/index.ts"
-  },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "prisma": "6.16.2",
     "typescript": "latest"
   },
   "dependencies": {
-    "@prisma/client": "6.16.2"
+    "express": "^5.1.0",
+    "@repo/db": "workspace:*"
   }
 }
