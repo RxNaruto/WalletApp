@@ -1,4 +1,3 @@
-import {InputBox }from "@repo/ui/InputBox"
 import { AddMoneyCard } from "../../../components/AddMoneyCard"
 import BalanceCard from "../../../components/BalanceCard"
 export default function transfers(){
@@ -6,7 +5,7 @@ export default function transfers(){
         transfer
         <div className="flex">
             <AddMoneyCard />
-    <BalanceCard />
+            <BalanceCard />
         </div>
     
     </div>

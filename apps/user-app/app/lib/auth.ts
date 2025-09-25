@@ -52,16 +52,12 @@ export const authOptions = {
                 }
                 return null;
             }
-        }),
-        GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
-
-    })
+        })
+       
     ],
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        session({token,session}:any){
+        async session({token,session}:any){
             session.user.id = token.sub
             return session
         }
