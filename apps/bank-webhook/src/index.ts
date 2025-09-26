@@ -28,7 +28,7 @@ app.post("/hdfcwebhook", async (req, res) => {
                 create: {
                     userId: Number(paymentInfo.userId),
                     amount: Number(paymentInfo.amount),
-                    locker: 1000
+                    locked: 1000
 
                 }
             }),
@@ -53,13 +53,13 @@ app.post("/hdfcwebhook", async (req, res) => {
 })
 app.post("/test",async(req,res)=>{
  const body = req.body;
- const {userId,amount,locker} = body;
+ const {userId,amount,locked} = body;
   try {
     const bal = await prismaClient.balance.create({
       data: {
           userId: userId,
           amount: amount,
-          locker: locker
+          locked: locked
       }
     })
     if(bal){
