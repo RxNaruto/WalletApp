@@ -1,8 +1,7 @@
-// import  PeerToPeerCard from "../../../components/PeerToPeerCard"
+import { PeerToPeerCard } from "../../../components/PeerToPeerCard"
 
-// export default function(){
-//     return <div>
-//         <PeerToPeerCard />
-       
-//     </div>
-// }
+export default function(){
+    return <div>
+        <PeerToPeerCard />
+    </div>
+}

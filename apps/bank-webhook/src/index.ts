@@ -16,14 +16,20 @@ app.post("/hdfcwebhook", async (req, res) => {
 
     try {
         await prismaClient.$transaction([
-            prismaClient.balance.updateMany({
+            prismaClient.balance.upsert({
                 where: {
                     userId: Number(paymentInfo.userId)
                 },
-                data: {
+                update :{
                     amount: {
                         increment: Number(paymentInfo.amount)
                     }
+                },
+                create: {
+                    userId: Number(paymentInfo.userId),
+                    amount: Number(paymentInfo.amount),
+                    locker: 1000
+
                 }
             }),
             prismaClient.onRampTransaction.updateMany({
@@ -70,4 +76,20 @@ app.post("/test",async(req,res)=>{
   }
 })
 
+app.get("/checkBalance", async (req, res) => {
+  const userId = req.body.userId;
+
+  const user = await prismaClient.user.findFirst({
+    where: {
+      id: Number(userId),
+    },
+    include: {
+      Balance: true, // include related balances
+    },
+  });
+
+  return res.json({
+    Balance: user?.Balance || [],
+  });
+});
 app.listen(3003);

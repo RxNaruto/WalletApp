@@ -2,7 +2,7 @@
   "name": "@repo/bank-webhook",
   "type": "module",
   "scripts": {
-    "dev": "tsc --watch",
+    "dev": "tsc -b && node dist/index.js",
     "build": "tsc"
   },
   "devDependencies": {
