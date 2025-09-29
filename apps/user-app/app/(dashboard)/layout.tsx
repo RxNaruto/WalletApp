@@ -12,6 +12,8 @@ export default function Layout({ children }: {
                     <SidebarItem href={"/transfers"} title={"Transfers"} />
                     <SidebarItem href={"/transactions"} title={"Transaction"} />
                     <SidebarItem href={"/p2p"} title={"PeerToPeer"} />
+                    <SidebarItem href={"/p2pTransactions"} title={"P2P Transaction"} />
+                    <SidebarItem href={"/allTransactions"} title={"All Transactions"} />
                 </div>
             </div>
                 {children}
