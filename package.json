@@ -24,6 +24,7 @@
     "@heroui/spinner": "^2.2.23",
     "@prisma/client": "6.16.2",
     "bcrypt": "^6.0.0",
+    "lucide-react": "^0.544.0",
     "next-auth": "^4.24.11"
   }
 }

@@ -1,12 +1,12 @@
 import { getServerSession } from "next-auth"
 import { AddMoneyCard } from "../../../components/AddMoneyCard"
-import {BalanceCard} from "../../../components/BalanceCard"
+import { BalanceCard } from "../../../components/BalanceCard"
 import { authOptions } from "../../lib/auth"
 import { prismaClient } from "@repo/db/client";
 import { redirect } from "next/navigation";
-async function getBalance(){
+async function getBalance() {
     const session = await getServerSession(authOptions);
-    if(!session){
+    if (!session) {
         redirect("/auth/signin")
     }
     const balance = await prismaClient.balance.findFirst({
@@ -20,15 +20,21 @@ async function getBalance(){
     }
 }
 
-export default async function transfers(){
+export default async function transfers() {
     const balance = await getBalance();
-    return <div>
-        transfer
-        <div className="flex">
-            <AddMoneyCard />
-            <BalanceCard amount={balance.amount} locked={balance.locked} />
-            
-        </div>
-    
-    </div>
+   
+            return <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 p-6">
+                <div className="max-w-7xl mx-auto">
+                    <div className="mb-8">
+                        <h1 className="text-3xl font-bold text-white mb-2">Transfer Money</h1>
+                        <p className="text-gray-400">Add money to your wallet or check your balance</p>
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <AddMoneyCard />
+                        <BalanceCard amount={balance.amount} locked={balance.locked} />
+
+                    </div>
+                </div>
+
+            </div>
 }

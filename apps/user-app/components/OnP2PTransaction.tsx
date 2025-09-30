@@ -7,6 +7,7 @@ export const P2PTransactions=({transaction}:{
         fromUserId: number
     }[]
 })=>{
+    
     if(!transaction.length){
        return <div>
         No recent transactions
