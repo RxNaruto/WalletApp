@@ -1,6 +1,7 @@
 import { Appbar } from "../../../components/Appbar";
 
-export default function dashboard(){
+export default async function dashboard(){
+    
     return <div>
         <Appbar/>
     </div>

@@ -1,0 +1,80 @@
+import { getServerSession } from "next-auth"
+import { authOptions } from "../../lib/auth"
+import { prismaClient } from "@repo/db/client";
+import { AllTransactionsList } from "../../../components/AllTransactionList";
+import { redirect } from "next/navigation";
+async function getAllTransactions() {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+        redirect("/auth/signin")
+    }
+
+    const onRampTxns = await prismaClient.onRampTransaction.findMany({
+        where: {
+            userId: Number(session.user.id)
+        },
+        select: {
+            amount: true,
+            status: true,
+            provider: true,
+            startTime: true,
+        }
+    })
+    const sentTxn = await prismaClient.p2pTransfer.findMany({
+        where: {
+            fromUserId: Number(session.user.id)
+        },
+        select: {
+            amount: true,
+            timestamp: true,
+            toUserId: true
+        }
+    })
+    const receivedTxn = await prismaClient.p2pTransfer.findMany({
+        where: {
+            toUserId: Number(session.user.id)
+        },
+        select: {
+            amount: true,
+            timestamp: true,
+            fromUserId: true
+        }
+    })
+    const allTransactions = [
+        ...onRampTxns.map(t => ({
+            type: "RECEIVED",
+            amount: t.amount,
+            status: t.status,
+            provider: t.provider,
+            datetime: t.startTime,
+
+        })),
+        ...sentTxn.map(t => ({
+            type: "SENT",
+            amount: t.amount,
+            datetime: t.timestamp,
+            toUserId: t.toUserId
+
+        })),
+        ...receivedTxn.map(t => ({
+            type: "RECEIVED",
+            amount: t.amount,
+            datetime: t.timestamp,
+            fromUserId: t.fromUserId
+
+        })),
+    ]
+    allTransactions.sort((a, b) => b.datetime.getTime() - a.datetime.getTime());
+    return allTransactions.map(t => ({
+        timestamp: t.datetime,
+        amount: t.amount,
+        type: t.type
+    }))
+}
+export default async function AllTransactions() {
+    const txn = await getAllTransactions();
+    return <div>
+        <AllTransactionsList transaction={txn} />
+    </div>
+}

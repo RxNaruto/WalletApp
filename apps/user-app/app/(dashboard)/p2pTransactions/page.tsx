@@ -2,9 +2,13 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "../../lib/auth"
 import { prismaClient } from "@repo/db/client";
 import { P2PTransactions } from "../../../components/OnP2PTransaction";
+import { redirect } from "next/navigation";
 
 async function getP2PTransactions(){
     const session = await getServerSession(authOptions);
+    if(!session){
+            redirect("/auth/signin")
+        }
     const txns = await prismaClient.p2pTransfer.findMany({
         where: {
             OR: [

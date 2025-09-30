@@ -21,7 +21,7 @@ return <div>
             const res = await signIn("credentials",{
                 phone: phone,
                 password: password,
-                redirect: false
+                callbackUrl: "/dashboard"
                 
             
            })

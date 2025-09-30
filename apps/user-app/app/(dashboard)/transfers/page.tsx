@@ -3,9 +3,12 @@ import { AddMoneyCard } from "../../../components/AddMoneyCard"
 import {BalanceCard} from "../../../components/BalanceCard"
 import { authOptions } from "../../lib/auth"
 import { prismaClient } from "@repo/db/client";
-
+import { redirect } from "next/navigation";
 async function getBalance(){
     const session = await getServerSession(authOptions);
+    if(!session){
+        redirect("/auth/signin")
+    }
     const balance = await prismaClient.balance.findFirst({
         where: {
             userId: Number(session?.user?.id)
@@ -24,6 +27,7 @@ export default async function transfers(){
         <div className="flex">
             <AddMoneyCard />
             <BalanceCard amount={balance.amount} locked={balance.locked} />
+            
         </div>
     
     </div>

@@ -20,6 +20,8 @@
     "node": ">=18"
   },
   "dependencies": {
+    "@heroui/react": "^2.8.4",
+    "@heroui/spinner": "^2.2.23",
     "@prisma/client": "6.16.2",
     "bcrypt": "^6.0.0",
     "next-auth": "^4.24.11"
