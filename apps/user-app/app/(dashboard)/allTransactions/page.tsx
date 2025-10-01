@@ -74,7 +74,13 @@ async function getAllTransactions() {
 }
 export default async function AllTransactions() {
     const txn = await getAllTransactions();
-    return <div>
-        <AllTransactionsList transaction={txn} />
-    </div>
+    return <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 p-6">
+        <div className="max-w-7xl mx-auto">
+            <div className="mb-8">
+                <h1 className="text-3xl font-bold text-white mb-2">All Transactions</h1>
+               <p className="text-gray-400">Complete history of all your transactions and transfers</p>
+            </div>
+         <AllTransactionsList transaction={txn} />
+        </div>
+     </div>
 }

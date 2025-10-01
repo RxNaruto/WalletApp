@@ -12,7 +12,7 @@ export default function Signin(){
             <div className="w-full max-w-md">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-600 via-blue-700 to-cyan-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
                         <CreditCard className="w-8 h-8 text-white" />
                     </div>
                     <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
@@ -75,7 +75,7 @@ export default function Signin(){
                                     callbackUrl: "/dashboard"
                                 })
                             }}
-                            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg transform hover:scale-105 flex items-center justify-center space-x-2 border border-blue-500/30"
+                            className="w-full bg-gradient-to-br from-blue-600 via-blue-700 to-cyan-700 text-white py-3 px-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg transform hover:scale-105 flex items-center justify-center space-x-2 border border-blue-500/30"
                         >
                             <span>Sign In</span>
                             <ArrowRight className="w-5 h-5" />
