@@ -4,6 +4,7 @@ import { AddMoneyButton } from "@repo/ui/AddMoneyButton"
 import { useState } from "react"
 import { createOnRampTxn } from "../app/lib/actions/createOnRampTxn"
 import { Select } from "@repo/ui/Select"
+import { amountValidTypes } from "@repo/zod-schema/types"
 const Supported_Banks = [{
     name: "hdfcBank",
     redirectUrl: "https://netbanking.hdfcbank.com"
@@ -16,6 +17,7 @@ export const AddMoneyCard = () => {
     const [redirectUrl, setRedirectUrl] = useState(Supported_Banks[0]?.redirectUrl);
     const [amount, setAmount] = useState(0);
     const [provider, setProvider] = useState(Supported_Banks[0]?.name || "")
+    const [error,setError] = useState("");
 
     return (
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 p-8">
@@ -48,6 +50,11 @@ export const AddMoneyCard = () => {
                     <AddMoneyButton 
                         label={"Add Money"} 
                         onClick={async () => {
+                            const parsedData = amountValidTypes.safeParse(amount);
+                            if(!parsedData.success){
+                                throw new Error("Invalid amount")
+                            }
+                            
                             await createOnRampTxn(amount * 100, provider);
                             window.location.href = redirectUrl || ""
                         }} 

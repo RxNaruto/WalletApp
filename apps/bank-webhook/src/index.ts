@@ -1,6 +1,6 @@
 import express from "express"
 import { prismaClient } from "@repo/db/client";
-import { signupTypes } from "@repo/zod-schema/types";
+import { amountValidTypes, signupTypes } from "@repo/zod-schema/types";
 import { phoneTypes } from "@repo/zod-schema/types";
 const app = express();
 app.use(express.json())
@@ -104,28 +104,15 @@ app.post("/axiswebhook", async (req, res) => {
 
 app.post("/test", (req, res) => {
   const body = req.body;
-  const parsedData = signupTypes.safeParse(body);
-  if (!parsedData.success) {
-    res.status(400).json({
-      message: "Incorrect Detail"
+  const parsedData = amountValidTypes.safeParse(body.amount);
+  if(parsedData.success){
+    return res.json({
+      message: "valid"
     })
-    return
   }
-  else {
-    const phone = Number(req.body.phone);
-    const phoneParse = phoneTypes.safeParse(phone);
-    if (phoneParse.success) {
-      return res.status(200).json({
-        message: "valid details"
-      })
-    }
-    return res.status(400).json({
-      message: "Incorrect Detail"
-    })
-    
-
-  }
-
+  return res.json({
+    message: "not valid"
+  })
 
 })
 

@@ -12,7 +12,8 @@ async function getAllTransactions() {
 
     const onRampTxns = await prismaClient.onRampTransaction.findMany({
         where: {
-            userId: Number(session.user.id)
+            userId: Number(session.user.id),
+            status: "Success"
         },
         select: {
             amount: true,

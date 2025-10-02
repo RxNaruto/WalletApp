@@ -3,6 +3,7 @@ import { AddMoneyButton } from "@repo/ui/AddMoneyButton"
 import { InputBox } from "@repo/ui/InputBox"
 import { useState } from "react"
 import { p2pTransfer } from "../app/lib/actions/p2pTransfer"
+import { amountValidTypes, phoneTypes } from "@repo/zod-schema/types"
 export const PeerToPeerCard=()=>{
     const [number,setNumber]=useState(0);
     const [amount,setAmount]=useState(0);
@@ -16,6 +17,11 @@ export const PeerToPeerCard=()=>{
         }}/>
         <div>
             <AddMoneyButton label={"Send"} onClick={async()=>{
+                const parsedAmountData = amountValidTypes.safeParse(amount);
+                const parsedPhoneData = phoneTypes.safeParse(number);
+                if(!parsedAmountData.success && !parsedPhoneData.success){
+                    throw new Error("Invalid Details");
+                }
              await p2pTransfer(number,Number(amount*100));
             }}/>
         </div>
