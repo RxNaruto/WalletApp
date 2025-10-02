@@ -1,7 +1,9 @@
 import { prismaClient } from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials"
-import GoogleProvider from "next-auth/providers/google"
+import { signupTypes } from "@repo/zod-schema/types";
+import { phoneTypes } from "@repo/zod-schema/types";
 import bcrypt from "bcrypt"
+import { NextResponse } from "next/server";
 
 export const authOptions = {
     providers: [
@@ -14,6 +16,10 @@ export const authOptions = {
  
             async authorize(credentials: any) {
                 const{phone,password} = credentials
+                const parsedData = signupTypes.safeParse(credentials);
+                if(!parsedData.success){
+                    throw new Error(parsedData.error.message || "Invalid input");
+                }
                 const hashedPassword = await bcrypt.hash(password, 10);
                 const existingUser = await prismaClient.user.findFirst({
                     where: {

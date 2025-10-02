@@ -3,10 +3,10 @@ import { signIn } from "next-auth/react"
 import { useState } from "react"
 import { CreditCard, Phone, Lock, ArrowRight } from 'lucide-react'
 
-export default function Signin(){
-    const[phone,setPhone] = useState("");
-    const[password,setPassword] = useState("");
-
+export default function Signin() {
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const [error,setError] = useState("");
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 flex items-center justify-center p-4">
             <div className="w-full max-w-md">
@@ -31,12 +31,12 @@ export default function Signin(){
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <Phone className="w-5 h-5 text-gray-400" />
                                 </div>
-                                <input 
-                                    type="text" 
-                                    placeholder="9898989898" 
+                                <input
+                                    type="text"
+                                    placeholder="9898989898"
                                     name="Phone Number"
                                     value={phone}
-                                    onChange={(e)=>{
+                                    onChange={(e) => {
                                         setPhone(e.target.value);
                                     }}
                                     className="w-full pl-10 pr-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all backdrop-blur-sm"
@@ -53,12 +53,12 @@ export default function Signin(){
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <Lock className="w-5 h-5 text-gray-400" />
                                 </div>
-                                <input 
-                                    type="password" 
-                                    name="Password" 
+                                <input
+                                    type="password"
+                                    name="Password"
                                     placeholder="Enter your password"
                                     value={password}
-                                    onChange={(e)=>{
+                                    onChange={(e) => {
                                         setPassword(e.target.value);
                                     }}
                                     className="w-full pl-10 pr-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all backdrop-blur-sm"
@@ -67,13 +67,20 @@ export default function Signin(){
                         </div>
 
                         {/* Sign In Button */}
-                        <button 
-                            onClick={async()=>{
-                                const res = await signIn("credentials",{
+                        <button
+                            onClick={async () => {
+                                const res = await signIn("credentials", {
                                     phone: phone,
                                     password: password,
+                                    redirect: false,
                                     callbackUrl: "/dashboard"
                                 })
+                                if (res?.error) {
+                                    setError(res.error); 
+                                }
+                                else if(res?.url){
+                                    window.location.href=res.url
+                                }
                             }}
                             className="w-full bg-gradient-to-br from-blue-600 via-blue-700 to-cyan-700 text-white py-3 px-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg transform hover:scale-105 flex items-center justify-center space-x-2 border border-blue-500/30"
                         >

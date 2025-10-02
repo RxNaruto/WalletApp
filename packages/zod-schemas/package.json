@@ -1,18 +1,19 @@
 {
-  "name": "@repo/bank-webhook",
+  "name": "@repo/zod-schema",
   "type": "module",
   "scripts": {
-    "dev": "tsc -b && node dist/index.js",
+    "dev": "tsc --watch",
     "build": "tsc"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "prisma": "6.16.2",
     "typescript": "latest"
   },
+  "exports":{
+    "./types": "./src/index.ts"
+  },
   "dependencies": {
-    "express": "^5.1.0",
-    "@repo/db": "workspace:*",
-    "@repo/zod-schema": "workspace:*"
-
+    "zod": "^4.1.11"
   }
 }
