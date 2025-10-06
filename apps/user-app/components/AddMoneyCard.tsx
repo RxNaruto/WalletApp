@@ -22,6 +22,10 @@ export const AddMoneyCard = () => {
     const [error, setError] = useState("");
 
     const handleTransfers = async () => {
+        if(!amount){
+            toast.warn("Enter the amount");
+            return;
+        }
         const parsedData = amountValidTypes.safeParse(amount);
         if (!parsedData.success) {
             toast.error("Invalid Amount");
