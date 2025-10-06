@@ -1,6 +1,7 @@
 "use client" 
 import { signIn, signOut, useSession } from "next-auth/react" 
 import { User, Settings, CreditCard, LogOut, LogIn } from 'lucide-react';
+import { toast } from "react-toastify";
 export const Appbar = () => {
     const session = useSession();
     const { status } = session;
@@ -36,7 +37,11 @@ export const Appbar = () => {
                     <div className="flex items-center space-x-4">
                         <button
                             onClick={() => {
-                                signOut();
+                                toast.success("Logout Successful")
+                                setTimeout(()=>{
+                                    signOut();
+                                },500)
+                                
                             }}
                             className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-lg transition-all duration-200 border border-gray-700/50 hover:border-gray-600/50"
                         >

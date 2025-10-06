@@ -25,6 +25,7 @@
     "@prisma/client": "6.16.2",
     "bcrypt": "^6.0.0",
     "lucide-react": "^0.544.0",
-    "next-auth": "^4.24.11"
+    "next-auth": "^4.24.11",
+    "react-toastify": "^11.0.5"
   }
 }

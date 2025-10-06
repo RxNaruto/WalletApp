@@ -1,7 +1,6 @@
 import express from "express"
 import { prismaClient } from "@repo/db/client";
 import { amountValidTypes, signupTypes } from "@repo/zod-schema/types";
-import { phoneTypes } from "@repo/zod-schema/types";
 const app = express();
 app.use(express.json())
 

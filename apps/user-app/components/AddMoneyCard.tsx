@@ -5,6 +5,8 @@ import { useState } from "react"
 import { createOnRampTxn } from "../app/lib/actions/createOnRampTxn"
 import { Select } from "@repo/ui/Select"
 import { amountValidTypes } from "@repo/zod-schema/types"
+import { toast } from "react-toastify"
+
 const Supported_Banks = [{
     name: "hdfcBank",
     redirectUrl: "https://netbanking.hdfcbank.com"
@@ -17,7 +19,22 @@ export const AddMoneyCard = () => {
     const [redirectUrl, setRedirectUrl] = useState(Supported_Banks[0]?.redirectUrl);
     const [amount, setAmount] = useState(0);
     const [provider, setProvider] = useState(Supported_Banks[0]?.name || "")
-    const [error,setError] = useState("");
+    const [error, setError] = useState("");
+
+    const handleTransfers = async () => {
+        const parsedData = amountValidTypes.safeParse(amount);
+        if (!parsedData.success) {
+            toast.error("Invalid Amount");
+            throw new Error("Invalid amount")
+        }
+
+        await createOnRampTxn(amount * 100, provider);
+        toast.success("Transaction Processed")
+        setTimeout(() => {
+            window.location.href = redirectUrl || ""
+        },1000)
+
+    }
 
     return (
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 p-8">
@@ -27,15 +44,15 @@ export const AddMoneyCard = () => {
             </div>
             <div className="space-y-6">
                 <div>
-                    <InputBox 
-                        label={"Amount"} 
-                        placeholder={"Enter amount"} 
-                        onChange={(e) => setAmount(Number(e.target.value))} 
+                    <InputBox
+                        label={"Amount"}
+                        placeholder={"Enter amount"}
+                        onChange={(e) => setAmount(Number(e.target.value))}
                     />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">Select Bank</label>
-                    <Select 
+                    <Select
                         options={Supported_Banks.map(bank => ({
                             key: bank.name,
                             value: bank.name
@@ -47,17 +64,9 @@ export const AddMoneyCard = () => {
                     />
                 </div>
                 <div className="pt-4">
-                    <AddMoneyButton 
-                        label={"Add Money"} 
-                        onClick={async () => {
-                            const parsedData = amountValidTypes.safeParse(amount);
-                            if(!parsedData.success){
-                                throw new Error("Invalid amount")
-                            }
-                            
-                            await createOnRampTxn(amount * 100, provider);
-                            window.location.href = redirectUrl || ""
-                        }} 
+                    <AddMoneyButton
+                        label={"Add Money"}
+                        onClick={handleTransfers}
                     />
                 </div>
             </div>

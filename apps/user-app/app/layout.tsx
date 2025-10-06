@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Provider } from "./provider";
+import { ToastProvider } from "./toast-provider";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -18,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={geist.className}>
-        <Provider>{children}</Provider>
+        <Provider>
+          {children}
+        <ToastProvider />
+        </Provider>
         </body>
     </html>
   );
