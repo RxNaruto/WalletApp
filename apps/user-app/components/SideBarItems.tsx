@@ -1,12 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { LayoutDashboard, ArrowLeftRight, Receipt, Users, History, List } from "lucide-react";
+import { LayoutDashboard, ArrowLeftRight, Receipt, Users, History, List, IndianRupee } from "lucide-react";
 
 const iconMap: { [key: string]: React.ReactNode } = {
   "Dashboard": <LayoutDashboard className="w-5 h-5" />,
   "Transfers": <ArrowLeftRight className="w-5 h-5" />,
-  "Transaction": <Receipt className="w-5 h-5" />,
+  "Transaction": <IndianRupee className="w-5 h-5" />,
   "PeerToPeer": <Users className="w-5 h-5" />,
   "P2P Transaction": <History className="w-5 h-5" />,
   "All Transactions": <List className="w-5 h-5" />,
