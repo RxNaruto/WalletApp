@@ -1,26 +1,58 @@
-interface DataProps{
+interface DataProps {
     timestamp: string;
     amount: number;
-    fromUserId: number;
-    toUserId: number;
+    type: string;
+    fromPhone: string;
+    toPhone: string;
 }
-export default function P2PCard({timestamp,amount,toUserId,fromUserId}:DataProps){
-    return <div className="bg-gray-700/30 rounded-xl p-6 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-200 hover:shadow-lg">
-        <div className="flex items-center justify-between">
-            <div className="flex-1">
-                <div className="flex items-center justify-between mb-3">
-                    <div className="text-lg font-semibold text-white">₹{amount.toLocaleString()}</div>
-                    <div className="text-sm text-gray-400">{timestamp}</div>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                    <div className="text-gray-300">
-                        <span className="text-gray-400">From:</span> User #{fromUserId}
+
+export default function P2PCard({ timestamp, amount, type, fromPhone, toPhone }: DataProps) {
+    const getTypeColor = (type: string) => {
+        return type === 'RECEIVED' ? 'text-green-400' : 'text-red-400';
+    };
+
+    const getTypeIcon = (type: string) => {
+        return type === 'RECEIVED' ? '+' : '-';
+    };
+
+    return (
+        <div className="bg-gray-700/30 rounded-xl p-6 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-200 hover:shadow-lg">
+            <div className="flex items-center justify-between">
+                <div className="flex-1">
+                    <div className="flex items-center justify-between mb-3">
+                        <div className={`text-lg font-semibold ${getTypeColor(type)}`}>
+                            {getTypeIcon(type)}₹{amount.toLocaleString()}
+                        </div>
+                        <div
+                            className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                type === 'RECEIVED'
+                                    ? 'text-green-400 bg-green-500/20'
+                                    : 'text-red-400 bg-red-500/20'
+                            }`}
+                        >
+                            {type}
+                        </div>
                     </div>
-                    <div className="text-gray-300">
-                        <span className="text-gray-400">To:</span> User #{toUserId}
+
+                    <div className="flex items-center justify-between text-sm text-gray-300">
+                        {type === "SENT" ? (
+                            <>
+                                <div>
+                                    <span className="text-gray-400">To:</span> {toPhone}
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div>
+                                    <span className="text-gray-400">From:</span> {fromPhone}
+                                </div>
+                            </>
+                        )}
                     </div>
+
+                    <div className="text-sm text-gray-400 mt-2">{timestamp}</div>
                 </div>
             </div>
         </div>
-     </div>
+    );
 }
